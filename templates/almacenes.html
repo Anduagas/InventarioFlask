@@ -1,0 +1,194 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <!-- Botón Regresar -->
+    <div class="page-header">
+        <a href="{{ url_for('index') }}" class="btn btn-back">
+            ← Regresar
+        </a>
+        <h1>Gestión de Almacenes</h1>
+    </div>
+
+    <!-- Filtros de Búsqueda -->
+    <div class="filters-section">
+        <h3>Filtros de Búsqueda</h3>
+        <form method="GET" action="{{ url_for('almacenes') }}" id="filterForm">
+            <div class="filter-row">
+                <div class="filter-group">
+                    <label for="nombre">Nombre:</label>
+                    <input type="text" id="nombre" name="nombre" value="{{ request.args.get('nombre', '') }}"
+                           class="form-input" placeholder="Buscar por nombre...">
+                </div>
+                <div class="filter-group">
+                    <label for="usuario_modifico">Último Usuario:</label>
+                    <input type="text" id="usuario_modifico" name="usuario_modifico"
+                           value="{{ request.args.get('usuario_modifico', '') }}"
+                           class="form-input" placeholder="Usuario que modificó...">
+                </div>
+            </div>
+            <!-- Nuevos filtros de fecha -->
+            <div class="filter-row">
+                <div class="filter-group">
+                    <label for="fecha_modificacion_desde">Fecha Modificación Desde:</label>
+                    <input type="date" id="fecha_modificacion_desde" name="fecha_modificacion_desde"
+                           value="{{ request.args.get('fecha_modificacion_desde', '') }}"
+                           class="form-input">
+                </div>
+                <div class="filter-group">
+                    <label for="fecha_modificacion_hasta">Fecha Modificación Hasta:</label>
+                    <input type="date" id="fecha_modificacion_hasta" name="fecha_modificacion_hasta"
+                           value="{{ request.args.get('fecha_modificacion_hasta', '') }}"
+                           class="form-input">
+                </div>
+            </div>
+            <div class="actions-section">
+                <button type="submit" class="btn btn-primary">Aplicar Filtros</button>
+                <a href="{{ url_for('almacenes') }}" class="btn btn-secondary">Limpiar Filtros</a>
+            </div>
+        </form>
+    </div>
+
+    <!-- Tabla de almacenes con scroll -->
+    <div class="table-scroll-container">
+        <div class="table-wrapper">
+            <table class="data-table" id="almacenesTable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Fecha Creación</th>
+                        <th>Última Modificación</th>
+                        <th>Último Usuario</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for almacen in almacenes %}
+                    <tr data-almacen-id="{{ almacen.id }}"
+                        onclick="seleccionarAlmacen(this, {{ almacen.id }})"
+                        class="almacen-row">
+                        <td>{{ almacen.id }}</td>
+                        <td>{{ almacen.nombre }}</td>
+                        <td>{{ almacen.fecha_hora_creacion or 'N/A' }}</td>
+                        <td>{{ almacen.fecha_hora_ultima_modificacion or 'No modificado' }}</td>
+                        <td>{{ almacen.ultimo_usuario_en_modificar or '-' }}</td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="5" style="text-align: center;">No se encontraron almacenes</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Botones de Acción -->
+    {% if session.usuario_rol in ['ADMIN', 'ALMACENES'] %}
+    <div class="action-buttons-bottom">
+        <button type="button" class="btn btn-success" onclick="agregarAlmacen()">
+            Agregar Almacén
+        </button>
+        <button type="button" class="btn btn-primary" id="btnEditarAlmacen" onclick="editarAlmacen()" disabled>
+            Editar Almacén
+        </button>
+        <button type="button" class="btn btn-danger" id="btnEliminarAlmacen" onclick="eliminarAlmacen()" disabled>
+            Eliminar Almacén
+        </button>
+    </div>
+    {% endif %}
+</div>
+
+<script>
+let almacenSeleccionado = null;
+
+function seleccionarAlmacen(fila, almacenId) {
+    // Remover selección anterior
+    document.querySelectorAll('.almacen-row').forEach(row => {
+        row.classList.remove('selected');
+    });
+
+    // Agregar selección actual
+    fila.classList.add('selected');
+    almacenSeleccionado = almacenId;
+
+    // Habilitar botones
+    document.getElementById('btnEditarAlmacen').disabled = false;
+    document.getElementById('btnEliminarAlmacen').disabled = false;
+}
+
+function agregarAlmacen() {
+    window.location.href = "{{ url_for('agregar_almacen') }}";
+}
+
+function editarAlmacen() {
+    if (almacenSeleccionado) {
+        window.location.href = `/editar_almacen/${almacenSeleccionado}`;
+    }
+}
+
+function eliminarAlmacen() {
+    if (!almacenSeleccionado) return;
+
+    Swal.fire({
+        title: '¿Estás seguro?',
+        text: "¡Esta acción no se puede deshacer!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Sí, eliminar',
+        cancelButtonText: 'Cancelar',
+        background: '#fff',
+        iconColor: '#dc3545'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            fetch(`/eliminar_almacen/${almacenSeleccionado}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    Swal.fire({
+                        title: '¡Eliminado!',
+                        text: data.message,
+                        icon: 'success',
+                        confirmButtonColor: '#00529e'
+                    }).then(() => {
+                        location.reload();
+                    });
+                } else {
+                    Swal.fire({
+                        title: 'Error',
+                        text: data.message,
+                        icon: 'error',
+                        confirmButtonColor: '#dc3545'
+                    });
+                }
+            })
+            .catch(error => {
+                Swal.fire({
+                    title: 'Error',
+                    text: 'Error al eliminar almacén: ' + error,
+                    icon: 'error',
+                    confirmButtonColor: '#dc3545'
+                });
+            });
+        }
+    });
+}
+
+// Doble click para editar rápido
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.almacen-row').forEach(row => {
+        row.addEventListener('dblclick', function() {
+            const almacenId = this.getAttribute('data-almacen-id');
+            window.location.href = `/editar_almacen/${almacenId}`;
+        });
+    });
+});
+</script>
+{% endblock %}

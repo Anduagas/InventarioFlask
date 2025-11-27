@@ -1,0 +1,248 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <!-- Botón Regresar -->
+    <div class="page-header">
+        <a href="{{ url_for('index') }}" class="btn btn-back">
+            ← Regresar
+        </a>
+        <h1>Gestión de Productos</h1>
+    </div>
+
+    <!-- Filtros de Búsqueda -->
+    <div class="filters-section">
+        <h3>Filtros de Búsqueda</h3>
+        <form method="GET" action="{{ url_for('productos') }}" id="filterForm">
+            <div class="filter-row">
+                <div class="filter-group">
+                    <label for="nombre">Nombre:</label>
+                    <input type="text" id="nombre" name="nombre" value="{{ request.args.get('nombre', '') }}"
+                           class="form-input" placeholder="Buscar por nombre...">
+                </div>
+                <div class="filter-group">
+                    <label for="almacen">Almacén:</label>
+                    <select id="almacen" name="almacen" class="form-input">
+                        <option value="">Todos los almacenes</option>
+                        {% for almacen in almacenes %}
+                        <option value="{{ almacen.id }}"
+                                {% if request.args.get('almacen')|int == almacen.id %}selected{% endif %}>
+                            {{ almacen.nombre }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="filter-row">
+                <div class="filter-group">
+                    <label for="departamento">Departamento:</label>
+                    <input type="text" id="departamento" name="departamento"
+                           value="{{ request.args.get('departamento', '') }}"
+                           class="form-input" placeholder="Buscar por departamento...">
+                </div>
+                <div class="filter-group">
+                    <label for="precio_min">Precio Mínimo:</label>
+                    <input type="number" id="precio_min" name="precio_min"
+                           value="{{ request.args.get('precio_min', '') }}"
+                           class="form-input" step="0.01" placeholder="0.00">
+                </div>
+            </div>
+            <div class="filter-row">
+                <div class="filter-group">
+                    <label for="precio_max">Precio Máximo:</label>
+                    <input type="number" id="precio_max" name="precio_max"
+                           value="{{ request.args.get('precio_max', '') }}"
+                           class="form-input" step="0.01" placeholder="9999.99">
+                </div>
+                <div class="filter-group">
+                    <label for="cantidad_min">Cantidad Mínima:</label>
+                    <input type="number" id="cantidad_min" name="cantidad_min"
+                           value="{{ request.args.get('cantidad_min', '') }}"
+                           class="form-input" placeholder="0">
+                </div>
+            </div>
+            <div class="filter-row">
+                <div class="filter-group">
+                    <label for="cantidad_max">Cantidad Máxima:</label>
+                    <input type="number" id="cantidad_max" name="cantidad_max"
+                           value="{{ request.args.get('cantidad_max', '') }}"
+                           class="form-input" placeholder="9999">
+                </div>
+                <div class="filter-group">
+                    <label for="usuario_modifico">Último Usuario:</label>
+                    <input type="text" id="usuario_modifico" name="usuario_modifico"
+                           value="{{ request.args.get('usuario_modifico', '') }}"
+                           class="form-input" placeholder="Usuario que modificó...">
+                </div>
+            </div>
+            <!-- Nuevos filtros de fecha -->
+            <div class="filter-row">
+                <div class="filter-group">
+                    <label for="fecha_modificacion_desde">Fecha Modificación Desde:</label>
+                    <input type="date" id="fecha_modificacion_desde" name="fecha_modificacion_desde"
+                           value="{{ request.args.get('fecha_modificacion_desde', '') }}"
+                           class="form-input">
+                </div>
+                <div class="filter-group">
+                    <label for="fecha_modificacion_hasta">Fecha Modificación Hasta:</label>
+                    <input type="date" id="fecha_modificacion_hasta" name="fecha_modificacion_hasta"
+                           value="{{ request.args.get('fecha_modificacion_hasta', '') }}"
+                           class="form-input">
+                </div>
+            </div>
+            <div class="actions-section">
+                <button type="submit" class="btn btn-primary">Aplicar Filtros</button>
+                <a href="{{ url_for('productos') }}" class="btn btn-secondary">Limpiar Filtros</a>
+            </div>
+        </form>
+    </div>
+
+<!-- Tabla de productos -->
+<div class="table-scroll-container">
+    <div class="table-wrapper">
+        <table class="data-table" id="productosTable">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Departamento</th>
+                    <th>Precio</th>
+                    <th>Cantidad</th>
+                    <th>Almacén</th>
+                    <th>Última Modificación</th>
+                    <th>Último Usuario</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for producto in productos %}
+                <tr data-producto-id="{{ producto.id }}"
+                    onclick="seleccionarProducto(this, {{ producto.id }})"
+                    class="producto-row">
+                    <td>{{ producto.id }}</td>
+                    <td>{{ producto.nombre }}</td>
+                    <td>{{ producto.departamento or '-' }}</td>
+                    <td>${{ "%.2f"|format(producto.precio) }}</td>
+                    <td>{{ producto.cantidad }}</td>
+                    <td>{{ producto.almacen_nombre or 'N/A' }}</td>
+                    <td>{{ producto.fecha_hora_ultima_modificacion or 'No modificado' }}</td>
+                    <td>{{ producto.ultimo_usuario_en_modificar or '-' }}</td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="8" style="text-align: center;">No se encontraron productos</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+    <!-- Botones de Acción (debajo de la tabla) -->
+    {% if session.usuario_rol in ['ADMIN', 'PRODUCTOS'] %}
+    <div class="action-buttons-bottom">
+        <button type="button" class="btn btn-success" onclick="agregarProducto()">
+            Agregar Producto
+        </button>
+        <button type="button" class="btn btn-primary" id="btnEditar" onclick="editarProducto()" disabled>
+            Editar Producto
+        </button>
+        <button type="button" class="btn btn-danger" id="btnEliminar" onclick="eliminarProducto()" disabled>
+            Eliminar Producto
+        </button>
+    </div>
+    {% endif %}
+</div>
+
+<script>
+let productoSeleccionado = null;
+
+function seleccionarProducto(fila, productoId) {
+    // Remover selección anterior
+    document.querySelectorAll('.producto-row').forEach(row => {
+        row.classList.remove('selected');
+    });
+
+    // Agregar selección actual
+    fila.classList.add('selected');
+    productoSeleccionado = productoId;
+
+    // Habilitar botones
+    document.getElementById('btnEditar').disabled = false;
+    document.getElementById('btnEliminar').disabled = false;
+}
+
+function agregarProducto() {
+    window.location.href = "{{ url_for('agregar_producto') }}";
+}
+
+function editarProducto() {
+    if (productoSeleccionado) {
+        window.location.href = `/editar_producto/${productoSeleccionado}`;
+    }
+}
+
+function eliminarProducto() {
+    if (!productoSeleccionado) return;
+
+    Swal.fire({
+        title: '¿Estás seguro?',
+        text: "¡Esta acción no se puede deshacer!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Sí, eliminar',
+        cancelButtonText: 'Cancelar',
+        background: '#fff',
+        iconColor: '#dc3545'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            fetch(`/eliminar_producto/${productoSeleccionado}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    Swal.fire({
+                        title: '¡Eliminado!',
+                        text: data.message,
+                        icon: 'success',
+                        confirmButtonColor: '#00529e'
+                    }).then(() => {
+                        location.reload();
+                    });
+                } else {
+                    Swal.fire({
+                        title: 'Error',
+                        text: data.message,
+                        icon: 'error',
+                        confirmButtonColor: '#dc3545'
+                    });
+                }
+            })
+            .catch(error => {
+                Swal.fire({
+                    title: 'Error',
+                    text: 'Error al eliminar producto: ' + error,
+                    icon: 'error',
+                    confirmButtonColor: '#dc3545'
+                });
+            });
+        }
+    });
+}
+
+// Doble click para editar rápido
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.producto-row').forEach(row => {
+        row.addEventListener('dblclick', function() {
+            const productoId = this.getAttribute('data-producto-id');
+            window.location.href = `/editar_producto/${productoId}`;
+        });
+    });
+});
+</script>
+{% endblock %}

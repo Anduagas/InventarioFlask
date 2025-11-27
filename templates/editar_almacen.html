@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <!-- Botón Regresar -->
+    <div class="page-header">
+        <a href="{{ url_for('almacenes') }}" class="btn btn-back">
+            ← Regresar a Almacenes
+        </a>
+        <h1>Editar Almacén</h1>
+        <p class="almacen-id">ID: {{ almacen.id }}</p>
+    </div>
+
+    <div class="form-container">
+        <form method="POST" class="almacen-form">
+            <div class="form-group">
+                <label for="nombre">Nombre *</label>
+                <input type="text" id="nombre" name="nombre" class="form-input"
+                       value="{{ almacen.nombre }}" required>
+            </div>
+
+            <!-- Información de auditoría -->
+            <div class="audit-info">
+                <h4>Información de Auditoría</h4>
+                <div class="audit-details">
+                    <p><strong>Fecha de creación:</strong> {{ almacen.fecha_hora_creacion or 'N/A' }}</p>
+                    {% if almacen.fecha_hora_ultima_modificacion %}
+                    <p><strong>Última modificación:</strong> {{ almacen.fecha_hora_ultima_modificacion }}</p>
+                    <p><strong>Último usuario en modificar:</strong> {{ almacen.ultimo_usuario_en_modificar }}</p>
+                    {% else %}
+                    <p><strong>Última modificación:</strong> No modificado</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-success">Actualizar Almacén</button>
+                <a href="{{ url_for('almacenes') }}" class="btn btn-secondary">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<style>
+    .almacen-id {
+        color: #666;
+        font-size: 0.9rem;
+        margin-top: -0.5rem;
+        margin-bottom: 1rem;
+    }
+</style>
+{% endblock %}

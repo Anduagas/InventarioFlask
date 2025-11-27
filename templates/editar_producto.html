@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <!-- Botón Regresar -->
+    <div class="page-header">
+        <a href="{{ url_for('productos') }}" class="btn btn-back">
+            ← Regresar a Productos
+        </a>
+        <h1>Editar Producto</h1>
+        <p class="producto-id">ID: {{ producto.id }}</p>
+    </div>
+
+    <div class="form-container">
+        <form method="POST" class="product-form">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="nombre">Nombre *</label>
+                    <input type="text" id="nombre" name="nombre" class="form-input"
+                           value="{{ producto.nombre }}" required>
+                </div>
+                <div class="form-group">
+                    <label for="departamento">Departamento</label>
+                    <input type="text" id="departamento" name="departamento" class="form-input"
+                           value="{{ producto.departamento or '' }}"
+                           placeholder="Ej: Electrónicos, Ropa, Hogar">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="precio">Precio *</label>
+                    <input type="number" id="precio" name="precio" class="form-input"
+                           value="{{ producto.precio }}" step="0.01" min="0" required>
+                </div>
+                <div class="form-group">
+                    <label for="cantidad">Cantidad *</label>
+                    <input type="number" id="cantidad" name="cantidad" class="form-input"
+                           value="{{ producto.cantidad }}" min="0" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="almacen">Almacén *</label>
+                <select id="almacen" name="almacen" class="form-input" required>
+                    <option value="">Seleccionar almacén...</option>
+                    {% for almacen in almacenes %}
+                    <option value="{{ almacen.id }}"
+                            {% if almacen.id == producto.almacen %}selected{% endif %}>
+                        {{ almacen.nombre }} - {{ almacen.ubicacion }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <!-- Información de auditoría -->
+            <div class="audit-info">
+                <h4>Información de Auditoría</h4>
+                <div class="audit-details">
+                    <p><strong>Fecha de creación:</strong> {{ producto.fecha_hora_creacion }}</p>
+                    {% if producto.fecha_hora_ultima_modificacion %}
+                    <p><strong>Última modificación:</strong> {{ producto.fecha_hora_ultima_modificacion }}</p>
+                    <p><strong>Último usuario en modificar:</strong> {{ producto.ultimo_usuario_en_modificar }}</p>
+                    {% else %}
+                    <p><strong>Última modificación:</strong> No modificado</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-success">Actualizar Producto</button>
+                <a href="{{ url_for('productos') }}" class="btn btn-secondary">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

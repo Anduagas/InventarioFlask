@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <!-- Botón Regresar -->
+    <div class="page-header">
+        <a href="{{ url_for('almacenes') }}" class="btn btn-back">
+            ← Regresar a Almacenes
+        </a>
+        <h1>Agregar Nuevo Almacén</h1>
+    </div>
+
+    <div class="form-container">
+        <form method="POST" class="almacen-form">
+            <div class="form-group">
+                <label for="nombre">Nombre *</label>
+                <input type="text" id="nombre" name="nombre" class="form-input" required
+                       placeholder="Ingresa el nombre del almacén">
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-success">Guardar Almacén</button>
+                <a href="{{ url_for('almacenes') }}" class="btn btn-secondary">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

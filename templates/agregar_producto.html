@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <!-- Botón Regresar -->
+    <div class="page-header">
+        <a href="{{ url_for('productos') }}" class="btn btn-back">
+            ← Regresar a Productos
+        </a>
+        <h1>Agregar Nuevo Producto</h1>
+    </div>
+
+    <div class="form-container">
+        <form method="POST" class="product-form">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="nombre">Nombre *</label>
+                    <input type="text" id="nombre" name="nombre" class="form-input" required
+                           placeholder="Ingresa el nombre del producto">
+                </div>
+                <div class="form-group">
+                    <label for="departamento">Departamento</label>
+                    <input type="text" id="departamento" name="departamento" class="form-input"
+                           placeholder="Ej: Electrónicos, Ropa, Hogar">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="precio">Precio *</label>
+                    <input type="number" id="precio" name="precio" class="form-input"
+                           step="0.01" min="0" required placeholder="0.00">
+                </div>
+                <div class="form-group">
+                    <label for="cantidad">Cantidad *</label>
+                    <input type="number" id="cantidad" name="cantidad" class="form-input"
+                           min="0" required placeholder="0">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="almacen">Almacén *</label>
+                <select id="almacen" name="almacen" class="form-input" required>
+                    <option value="">Seleccionar almacén...</option>
+                    {% for almacen in almacenes %}
+                    <option value="{{ almacen.id }}">{{ almacen.nombre }} - {{ almacen.ubicacion }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-success">Guardar Producto</button>
+                <a href="{{ url_for('productos') }}" class="btn btn-secondary">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
