@@ -295,7 +295,7 @@
 - fecha_hora_ultima_modificacion (DATETIME)
 
 - ultimo_usuario_en_modificar (TEXT)
-- 
+
 ### Colores institucionales UNISON:
 
 - 🔵 Azul Unison: #00529e
