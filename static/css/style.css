@@ -3,6 +3,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 :root {
@@ -55,6 +56,7 @@ body {
     color: var(--blanco);
     font-size: 1.5rem;
     font-weight: 600;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .nav-menu {
@@ -70,6 +72,7 @@ body {
     border-radius: 4px;
     transition: background-color 0.3s;
     font-weight: 500;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .nav-link:hover {
@@ -79,12 +82,15 @@ body {
 .nav-user {
     color: var(--dorado-unison);
     font-weight: 600;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .logout {
     background-color: var(--dorado-unison);
     color: var(--azul-oscuro);
     font-weight: 600;
+    border-radius: 4px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .logout:hover {
@@ -122,11 +128,13 @@ body {
     margin-bottom: 0.5rem;
     font-size: 1.8rem;
     font-weight: 600;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .login-header p {
     color: #666;
     font-size: 1rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .login-form {
@@ -143,17 +151,18 @@ body {
     color: var(--gris-oscuro);
     font-weight: 600;
     font-size: 0.95rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .form-input {
     width: 100%;
     padding: 0.875rem;
     border: 2px solid var(--gris-medio);
-    border-radius: 6px;
+    border-radius: 4px;
     font-size: 1rem;
     transition: all 0.3s ease;
     background-color: #f8f9fa;
-    font-family: 'Segoe UI', sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .form-input:focus {
@@ -171,13 +180,13 @@ body {
     background: linear-gradient(135deg, var(--azul-unison), var(--azul-oscuro));
     color: var(--blanco);
     border: none;
-    border-radius: 8px;
+    border-radius: 4px;
     font-size: 1.2rem;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
     box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-    font-family: 'Segoe UI', sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .external-login-btn:hover {
@@ -201,6 +210,7 @@ body {
     color: #666;
     font-size: 0.9rem;
     line-height: 1.4;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 /* ===== CONTENIDO PRINCIPAL ===== */
@@ -236,18 +246,21 @@ body {
     border-radius: 8px;
     font-weight: bold;
     font-size: 1.2rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .welcome-section h1 {
     color: var(--azul-unison);
     margin-bottom: 1rem;
     font-size: 2.5rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .developer {
     color: #666;
     font-size: 1.1rem;
     margin-bottom: 3rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .quick-stats {
@@ -272,11 +285,13 @@ body {
     margin-bottom: 1rem;
     font-size: 1rem;
     font-weight: 500;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .stat-number {
     font-size: 2.5rem;
     font-weight: bold;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 /* ===== FILTROS ===== */
@@ -292,6 +307,7 @@ body {
     color: var(--azul-unison);
     margin-bottom: 1rem;
     font-size: 1.2rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .filter-row {
@@ -335,6 +351,7 @@ body {
     padding: 1rem;
     text-align: left;
     border-bottom: 1px solid var(--gris-medio);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .data-table th {
@@ -342,6 +359,7 @@ body {
     color: var(--blanco);
     font-weight: 600;
     font-size: 0.9rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .data-table tr:hover {
@@ -364,7 +382,7 @@ body {
     text-decoration: none;
     display: inline-block;
     text-align: center;
-    font-family: 'Segoe UI', sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .btn-primary {
@@ -407,6 +425,7 @@ body {
 .btn-sm {
     padding: 0.5rem 1rem;
     font-size: 0.875rem;
+    border-radius: 4px;
 }
 
 /* ===== FORMULARIOS ===== */
@@ -423,6 +442,7 @@ body {
     color: var(--azul-unison);
     margin-bottom: 2rem;
     font-size: 1.8rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .form-row {
@@ -457,6 +477,7 @@ body {
     border-radius: 6px;
     border-left: 4px solid;
     font-weight: 500;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .alert-error {
@@ -527,6 +548,7 @@ body {
     .btn {
         width: 100%;
         margin-bottom: 0.5rem;
+        border-radius: 4px;
     }
 
     .actions-section {
@@ -564,6 +586,7 @@ body {
     .external-login-btn {
         padding: 1rem;
         font-size: 1.1rem;
+        border-radius: 4px;
     }
 
     .index-container {
@@ -645,12 +668,13 @@ body {
     padding: 2rem 1.5rem;
     background: var(--blanco);
     border: 2px solid var(--gris-medio);
-    border-radius: 12px;
+    border-radius: 4px;
     text-decoration: none;
     color: var(--azul-unison);
     transition: all 0.3s ease;
     min-width: 140px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .nav-btn:hover {
@@ -679,12 +703,14 @@ body {
     font-size: 2.5rem;
     margin-bottom: 0.5rem;
     display: block;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .nav-text {
     font-size: 1.1rem;
     font-weight: 600;
     text-align: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 /* Efecto activo para el botón de Inicio */
@@ -704,6 +730,7 @@ body {
     .nav-btn {
         padding: 1.5rem 1rem;
         min-width: 120px;
+        border-radius: 4px;
     }
 
     .nav-icon {
@@ -727,6 +754,7 @@ body {
         flex-direction: row;
         gap: 1rem;
         padding: 1.2rem;
+        border-radius: 4px;
     }
 
     .nav-icon {
@@ -738,6 +766,7 @@ body {
         font-size: 1rem;
     }
 }
+
 /* ===== ESTILOS PARA EL LOGO ===== */
 .logo {
     margin-bottom: 2rem;
@@ -747,13 +776,14 @@ body {
 .logo-image {
     max-width: 240px;
     height: auto;
-    border-radius: 8px;
+    border-radius: 4px;
 }
 
 /* Para logos rectangulares */
 .logo-rectangular {
     max-width: 250px;
     height: auto;
+    border-radius: 4px;
 }
 
 /* Para logos cuadrados */
@@ -761,7 +791,9 @@ body {
     width: 150px;
     height: 150px;
     object-fit: contain;
+    border-radius: 4px;
 }
+
 /* ===== BOTÓN REGRESAR ===== */
 .page-header {
     display: flex;
@@ -773,6 +805,7 @@ body {
 .page-header h1 {
     margin: 0;
     color: var(--azul-unison);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .btn-back {
@@ -784,6 +817,7 @@ body {
     font-weight: 500;
     transition: all 0.3s ease;
     border: 1px solid #ccc;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .btn-back:hover {
@@ -818,7 +852,7 @@ body {
     margin-top: 2rem;
     padding: 1.5rem;
     background: var(--blanco);
-    border-radius: 8px;
+    border-radius: 4px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
@@ -826,6 +860,7 @@ body {
     min-width: 150px;
     padding: 0.875rem 1.5rem;
     font-weight: 600;
+    border-radius: 4px;
 }
 
 .action-buttons-bottom .btn:disabled {
@@ -849,6 +884,7 @@ body {
     background-color: var(--azul-unison);
     z-index: 10;
 }
+
 /* ===== TABLA CON SCROLL ===== */
 .table-scroll-container {
     background: var(--blanco);
@@ -931,6 +967,7 @@ body {
     text-align: left;
     border-bottom: 1px solid var(--gris-medio);
     white-space: nowrap; /* Evita que el texto se rompa */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .data-table th {
@@ -940,6 +977,7 @@ body {
     font-size: 0.9rem;
     position: sticky;
     top: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 /* Indicador visual de que hay más contenido */
@@ -954,6 +992,7 @@ body {
     pointer-events: none;
     border-radius: 0 0 8px 8px;
 }
+
 /* ===== MEJORAS PARA FORMULARIOS ===== */
 .form-container {
     background: var(--blanco);
@@ -968,6 +1007,7 @@ body {
     color: var(--azul-unison);
     margin-bottom: 0.5rem;
     font-size: 1.8rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .product-form .form-input:focus {
@@ -979,7 +1019,7 @@ body {
 .audit-info {
     background: #f8f9fa;
     padding: 1.5rem;
-    border-radius: 6px;
+    border-radius: 4px;
     margin: 1.5rem 0;
     border-left: 4px solid var(--azul-unison);
 }
@@ -989,12 +1029,14 @@ body {
     margin-bottom: 1rem;
     font-size: 1rem;
     font-weight: 600;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .audit-details p {
     margin: 0.5rem 0;
     font-size: 0.9rem;
     color: #555;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .audit-details strong {
@@ -1005,6 +1047,7 @@ body {
 .form-input::placeholder {
     color: #999;
     font-size: 0.9rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 /* Estilos para selects */
@@ -1015,7 +1058,9 @@ body {
     background-position: right 0.75rem center;
     background-size: 1rem;
     padding-right: 2.5rem;
+    border-radius: 4px;
 }
+
 /* ===== ESTILOS PARA FILAS DE ALMACENES ===== */
 .almacen-row {
     cursor: pointer;
@@ -1035,9 +1080,11 @@ body {
     color: var(--blanco);
     border-color: var(--azul-oscuro);
 }
+
 /* ===== ESTILOS PARA FILTROS DE FECHA ===== */
 .form-input[type="date"] {
-    font-family: 'Segoe UI', sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    border-radius: 4px;
 }
 
 /* Mejora visual para los filtros de fecha */
@@ -1046,6 +1093,7 @@ body {
     margin-bottom: 0.5rem;
     display: block;
     color: var(--gris-oscuro);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 /* Responsive para filtros */
@@ -1057,4 +1105,36 @@ body {
     .filter-group {
         min-width: auto;
     }
+}
+
+/* ===== BOTONES ADICIONALES ===== */
+.btn-outline {
+    background: transparent;
+    border: 2px solid var(--azul-unison);
+    color: var(--azul-unison);
+    border-radius: 4px;
+}
+
+.btn-outline:hover {
+    background: var(--azul-unison);
+    color: var(--blanco);
+}
+
+/* ===== INPUTS ADICIONALES ===== */
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="number"],
+input[type="tel"],
+input[type="url"],
+input[type="search"],
+input[type="date"],
+input[type="datetime-local"],
+input[type="month"],
+input[type="week"],
+input[type="time"],
+textarea,
+select {
+    border-radius: 4px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
